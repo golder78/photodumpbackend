@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Dashboard</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background Gradient */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #1f1c2c, #6A4C93, #E3A6B9);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Container for Content */
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1000px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            margin: 20px auto;
+        }
+
+        /* Logout Button */
+        .logout-button {
+            text-decoration: none;
+            color: #ff6f61;
+            font-size: 1em;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+            display: inline-block;
+        }
+
+        .logout-button:hover {
+            background: #ff6f61;
+            color: white;
+        }
+
+        /* Upload Form Section */
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #ff6f61;
+        }
+
+        form {
+            display: grid;
+            gap: 15px;
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            font-size: 1.1em;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        select {
+            padding: 10px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: 2px solid #6A4C93;
+            background: #D1C4E9;
+            color: #333;
+            transition: border-color 0.3s;
+        }
+
+        input[type="file"]:focus,
+        input[type="text"]:focus,
+        select:focus {
+            border-color: #ff6f61;
+            outline: none;
+        }
+
+        button {
+            background-color: #ff6f61;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e84e4e;
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .photo-card {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .photo-description {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #ff6f61;
+        }
+
+        .photo-category {
+            margin-top: 10px;
+            color: #f3e5f5;
+        }
+
+        /* Delete Button */
+        .delete-form button {
+            background-color: #e84e4e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 1em;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .delete-form button:hover {
+            background-color: #d46f6f;
+        }
+
+        /* Animation for Background */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+    <script>
+        function previewImage(event) {
+            const preview = document.querySelector('.preview img');
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+            }
+        }
+
+        function filterPhotos() {
+            const filterValue = document.getElementById('category-filter').value;
+            const photoCards = document.querySelectorAll('.photo-card');
+
+            photoCards.forEach(card => {
+                if (!filterValue || card.dataset.category.includes(filterValue)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Photo Dashboard</h1>
+    </header>
+
+    <div class="container">
+        <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+
+        <h2>Upload New Photo</h2>
+        <form action="{{ url_for('dashboard') }}" method="POST" enctype="multipart/form-data">
+            <label for="photo">Photo:</label>
+            <input type="file" name="photo" required onchange="previewImage(event)">
+            <div class="preview">
+                <img src="" alt="Photo Preview">
+            </div>
+            <label for="description">Description:</label>
+            <input type="text" name="description" placeholder="Enter a description">
+            <label for="category">Categories (Hold Ctrl to select multiple):</label>
+            <select name="categories" id="category-select" multiple>
+                <option value="1">Family</option>
+                <option value="2">Vacation</option>
+                <option value="3">Friends</option>
+                <option value="4">My Things</option>
+            </select>
+            <button type="submit">Upload</button>
+        </form>
+
+        <div class="filters">
+            <select id="category-filter" onchange="filterPhotos()">
+                <option value="">-- Filter by Category --</option>
+                <option value="1">Family</option>
+                <option value="2">Vacation</option>
+                <option value="3">Friends</option>
+                <option value="4">My Things</option>
+            </select>
+        </div>
+
+        <h2>Your Uploaded Photos</h2>
+        {% if photos %}
+            <div class="photo-gallery" id="photo-gallery">
+                {% for photo in photos %}
+                    <div class="photo-card" data-category="{{ photo.category_id }}">
+                        <img src="{{ url_for('uploaded_file', filename=photo.filename) }}" alt="Uploaded Photo">
+                        <p class="photo-description">{{ photo.description }}</p>
+                        <p class="photo-category">
+                            {% if photo.category_id == 1 %} Family
+                            {% elif photo.category_id == 2 %} Vacation
+                            {% elif photo.category_id == 3 %} Friends
+                            {% elif photo.category_id == 4 %} My Things
+                            {% endif %}
+                        </p>
+                        <form action="{{ url_for('delete', photo_id=photo.id) }}" method="POST" class="delete-form">
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this photo?');">Delete</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No photos uploaded yet. Upload your first photo!</p>
+        {% endif %}
+    </div>
+</body>
+</html>

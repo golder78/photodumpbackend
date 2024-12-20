@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Dashboard Login</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background and Layout */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #1f1c2c, #928DAB, #E3A6B9);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        p {
+            font-size: 1.2em;
+            font-weight: light;
+            color: #D8A7B1;
+        }
+
+        /* Main Container */
+        .landing-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Login Section */
+        .login-container {
+            width: 300px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .login-container h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #ff6f61;
+        }
+
+        label {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #6A4C93;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #D1C4E9;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        input[type="email"]:focus, input[type="password"]:focus {
+            border-color: #ff6f61;
+            background: #f3e5f5;
+            outline: none;
+        }
+
+        button {
+            background-color: #ff6f61;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #e84e4e;
+        }
+
+        /* Signup Section */
+        .signup-container {
+            width: 300px;
+            text-align: center;
+        }
+
+        .signup-container h2 {
+            font-size: 2em;
+            color: #ff6f61;
+        }
+
+        .signup-container p {
+            margin-top: 15px;
+            font-size: 1.1em;
+            color: #e0b0b0;
+        }
+
+        .signup-link {
+            color: #ff6f61;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .signup-link:hover {
+            text-decoration: underline;
+            color: #e84e4e;
+        }
+
+        /* Animation for Background */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Welcome to Photo Dashboard</h1>
+        <p>Organize, upload, and explore your memories with ease.</p>
+    </header>
+
+    <!-- Main Landing Section -->
+    <div class="landing-container">
+        <!-- Login Form -->
+        <div class="login-container">
+            <h2>Login</h2>
+            <form action="/login" method="POST">
+                <label for="email">Email:</label>
+                <input type="email" name="email" placeholder="Enter your email" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+                
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <!-- Signup Section -->
+        <div class="signup-container">
+            <h2>New User?</h2>
+            <p>Don't have an account yet? Register to get started and explore your photos.</p>
+            <a href="https://example.com/signup" class="signup-link">Sign Up Now</a>
+        </div>
+    </div>
+</body>
+</html>
